@@ -1,0 +1,28 @@
+hardAntiAffinity: false
+
+affinity: {}
+
+haproxy:
+  enabled: true
+  replicas: 3
+  service:
+    type: ClusterIP
+    clusterIP: None
+
+schedulerName: ""
+
+# Enable auth on BOTH redis and sentinel. The graceful-failover fix (#375 /
+# #377) is specifically about SENTINEL failover working when sentinel auth is
+# on -- previously SENTINELAUTH wasn't injected where the hook ran, so the
+# failover silently failed. Testing with auth disabled would not exercise it.
+auth: true
+redisPassword: "e2e-redis-pass"
+
+redis:
+  port: 6379
+  masterGroupName: "mymaster"
+
+sentinel:
+  port: 26379
+  auth: true
+  password: "e2e-sentinel-pass"
